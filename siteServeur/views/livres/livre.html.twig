@@ -1,0 +1,77 @@
+{% extends "base.html.twig" %}
+
+{% block titre %}{{ livre.nom }}{% endblock %}
+{% block contenu %}
+
+    {% if isModified %}
+
+        <div class="container">
+            <form action="/livres/modificationServeur" method="post"><!-- formulaire avec valeurs pré-remplies (+ value="")-->
+                <div class="row m-2">
+                    <div class="col-6">
+                        <h2>Informations</h2>
+                        <div class="form-group">
+                            <label for="titre">Titre</label>
+                            <input type="text" class="form-control" id="titre" name="titre" value="{{livre.nom}}">
+                        </div>
+                        <div class="form-group">
+                            <label for="auteur">Auteur</label>
+                            <input type="text" class="form-control" id="auteur" name="auteur" value="{{livre.auteur}}">
+                        </div>
+                        <div class="form-group">
+                            <label for="pages">Pages</label>
+                            <input type="number" class="form-control" id="pages" name="pages" value="{{livre.pages}}">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <h2>Résumé :</h2>
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea class="form-control" id="description" name="description" rows="3">{{livre.description}}</textarea> 
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" name="identifiant" value="{{livre._id}}">
+                <input type="submit" class="btn btn-primary w-100" value="Valider">
+            </form>
+            <br>
+            <!-- FORM MODIFICATION IMAGE -->
+            <form action="/livres/updateImage" method="POST" enctype="multipart/form-data">
+                <!-- récup ID  -->
+                <input type="hidden" name="identifiant" value="{{livre._id}}">
+                <h2>Image</h2>
+                <div class="row">
+                    <!-- COL 1 : AFFICHER L'IMAGE A L"UTILISATEUR -->
+                    <img src= "/images/{{ livre.image }}" class="col-3">
+                    <!-- COL 2 : fORM -->
+                    <div class="col-9">
+                        <div class="form-group">
+                            <label for="image">image</label>
+                            <input type="file" class="form-control-file" id="image" name="image">
+                        </div>
+                        <br>
+                        <input type="submit" class="btn btn-primary" value="Modifier l'image">
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    {% else %}
+    <div class="row m-2 text-center">
+        <div class="col-6">
+            <h2>Informations</h2>
+            <div>Auteur : <a href="/auteurs/{{livre.auteur._id}}">{{ livre.auteur.nom }} {{ livre.auteur.prenom }}</a></div>
+            <div>Nombres de pages : {{ livre.pages }}</div>
+            <img src= "/images/{{ livre.image }}">
+        </div>
+        <div class="col-6">
+            <h2>Résumé :</h2>
+            <div>
+                {{ livre.description }}
+            </div>
+        </div>
+    </div>
+
+     {% endif %}
+
+{% endblock %} 
