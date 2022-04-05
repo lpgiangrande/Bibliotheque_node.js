@@ -5,7 +5,7 @@ const auteurSchema = require("../models/auteurs.modele");
 const livreSchema = require("../models/livres.modele")
 const fs = require("fs");
 
-exports.showAuthor = (req, res) => {
+exports.showAuthor = (req, res) => { 
     auteurSchema.findById(req.params.id)
     .populate("livres")
     /* on a maintenant 1 tableau de livres en + des infos de l'auteur.
