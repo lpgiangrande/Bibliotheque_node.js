@@ -1,3 +1,5 @@
+//////// CONTROLLER AUTEUR ////////
+
 const mongoose = require("mongoose");
 const auteurSchema = require("../models/auteurs.modele");
 const livreSchema = require("../models/livres.modele")
@@ -19,14 +21,14 @@ exports.showAuthor = (req, res) => {
 }
 
 exports.showAllAuthors = (request, response) => {
-    // Récupérer l'ensemble de nos auteurs avec le schema.find
+    // Récupérer l'ensemble de nos auteurs avec le schema.find()
     auteurSchema.find()
     // Récupérer les livres liés à l'auteur
     .populate("livres") // sur le champs "livres" = virtual
     .exec()
     .then(auteurs => { // récup auteurs
         response.render("auteurs/liste-auteurs.html.twig", 
-            {auteurs : auteurs}); // renvoi réponse avec liste auteur au template grâce à l'objet
+            {auteurs : auteurs}); // renvoi réponse avec liste auteurs au template grâce à l'objet
     })
     .catch(error => {
         console.log(error);

@@ -2,7 +2,7 @@
 const express = require("express");
 const serveur = express(); // L'assigner dans une autre variable et le lancer
 const morgan = require("morgan");
-const routeurLivres = require("./routeurs/livres.routeur"); //import routeur
+const routeurLivres = require("./routeurs/livres.routeur"); 
 const routeurGlobal = require("./routeurs/global.routeur"); 
 const routeurAuteur = require("./routeurs/auteurs.routeur"); 
 const mongoose = require("mongoose");
@@ -18,7 +18,7 @@ serveur.use(session({
 }));
 
 
-//Connexsion
+//Connexion
 mongoose.connect("mongodb://localhost/biblio", {useNewUrlParser:true, useUnifiedTopology:true});
 
 serveur.use(express.static("public")); //pour utiliser le fichier css dans dossier "public"
@@ -35,7 +35,7 @@ serveur.use((request, response, next) =>{
 
 // indiquer au serveur d'utiliser ce routeur pour les routes commençant par / dans l'url :
 serveur.use("/", routeurLivres);
-serveur.use("/", routeurAuteur); // attention à l'ordre (?)
+serveur.use("/", routeurAuteur); // attention à l'ordre 
 serveur.use("/", routeurGlobal);
 
 

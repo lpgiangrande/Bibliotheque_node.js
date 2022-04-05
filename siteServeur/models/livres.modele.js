@@ -1,4 +1,4 @@
-const mongoose = require("mongoose"); //logiciel bdd
+const mongoose = require("mongoose"); 
 
 // Structure / schema - schema() -> sorte de classe
 const livreSchema = mongoose.Schema({
