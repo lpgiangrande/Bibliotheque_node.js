@@ -22,7 +22,7 @@ exports.showBookList = (request, response) =>{
                 // on renvoie la nouvelle page quand la requête est terminée
                 response.render("livres/liste.html.twig", {
                     liste : livres, 
-                    auteur : auteurs, 
+                    auteurs : auteurs, 
                     message : response.locals.message
                 }); //renvoie objet json {livres} dans la propriété "liste"
             })  
@@ -39,8 +39,8 @@ exports.showBookList = (request, response) =>{
 exports.addBook = (request, response) => {
     const livre = new livreSchema({
         _id: new mongoose.Types.ObjectId(),
-        auteur : request.body.auteur, // le name du formulaire, ici 'auteur"
         nom : request.body.titre,
+        auteur : request.body.auteur, // le name du formulaire, ici 'auteur"
         pages :request.body.pages,
         description : request.body.description,
         image : request.file.path.substring(14) // enlève les 13 1ers caractères, soit /public/images
@@ -61,7 +61,10 @@ exports.showBookDetails = (request, response) => {
     .populate("auteur")//Info pour avoir 1 objet complexe qui contient toutes les infos de l'auteur
     .exec()
     .then(livre => {
-        response.render("livres/livre.html.twig", {livre : livre, isModified : false});
+        response.render("livres/livre.html.twig", {
+            livre : livre, 
+            isModified : false
+        });
     })
     .catch(error =>{
         console.log(error);
@@ -70,10 +73,22 @@ exports.showBookDetails = (request, response) => {
 
 // UPDATE 
 exports.updateBook = (request, response) => {
-    livreSchema.findById(request.params.id)
+    auteurSchema.find()
     .exec()
-    .then(livre => {
-        response.render("livres/livre.html.twig", {livre : livre, isModified : true});
+    .then(auteurs => {
+        livreSchema.findById(request.params.id)
+        .populate("auteur")
+        .exec()
+        .then(livre => {
+            response.render("livres/livre.html.twig", {
+                livre : livre, 
+                auteurs : auteurs, 
+                isModified : true
+            })
+        })
+        .catch(error =>{
+            console.log(error);     
+        })
     })
     .catch(error =>{
         console.log(error);     
