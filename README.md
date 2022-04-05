@@ -6,7 +6,7 @@ Bibliothèque (liste livres, auteurs), CRUD
 ### Technologies :
 * html
 * css
-* JavaScrip
+* JavaScript
 * node.js 
 * express.js
 * MongoDB 
